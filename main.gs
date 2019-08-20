@@ -24,7 +24,7 @@ function kensaku(){
 }
 
 
-function fetchFile(){
+function csv_down(){
   //ドライブにメールのCSVファイルを保存
   for(var i in myMessages){
       for(var j in myMessages[i]){
