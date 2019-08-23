@@ -3,6 +3,9 @@
 //CSVファイルデータをスプレッドシートに追加(import())  の呼び出し
 //追加データをメールで知らせる
 
+//書き込む対象のSpread Sheetを定義
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sh = ss.getSheetByName('ena1');
 
 var SEARCH_TERM = 'label:エナビ確認済-出荷依頼 csv is:unread';
 var myFolder = DriveApp.getFolderById("1lcHVxYbjsIDQZRSLpoUH7xUWSCtMcUWU");

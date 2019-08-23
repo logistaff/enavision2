@@ -2,12 +2,6 @@
 //CSVファイルデータをスプレッドシートに追加(import())
 //
 
-
-
-//書き込む対象のSpread Sheetを定義
-var ss = SpreadsheetApp.getActiveSpreadsheet();
-var sh = ss.getSheetByName('ena1');
-
 function import() {
 
   // 対象のCSVファイルが置かれているフォルダ名、ファイル名を定義

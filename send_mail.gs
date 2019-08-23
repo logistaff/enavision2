@@ -1,3 +1,5 @@
+//メール送信
+
 function mail() {
   var to = "yoshiosmile68@gmail.com";
   var title = "エナビジョン出荷依頼 合計数";
