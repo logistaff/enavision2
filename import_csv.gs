@@ -5,7 +5,7 @@
 function import() {
 
   // 対象のCSVファイルが置かれているフォルダ名、ファイル名を定義
-  var folderName = "(仮)エナビジョン";
+  var folderName = "エナビジョン出荷依頼";
   var fileName = "enavision" + today;
   var folders = DriveApp.getFoldersByName(folderName);
 
