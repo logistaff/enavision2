@@ -41,5 +41,6 @@ function csv_down(){
   }
   //import関数の呼び出し
   import();
-  mail();
+  //mail();
+  LINE();
 }
