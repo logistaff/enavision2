@@ -20,7 +20,8 @@ function kensaku(){
   //メールがあるかチェック
   if (myThreads != false){
     Logger.log("OK")
-    fetchFile();
+    csv_down();
+    LINE();
   }else{
     Logger.log("データ無し")
   }
@@ -42,5 +43,6 @@ function csv_down(){
   //import関数の呼び出し
   import();
   //mail();
-  LINE();
 }
+
+
