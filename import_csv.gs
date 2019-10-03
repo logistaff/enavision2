@@ -26,10 +26,24 @@ function import() {
           
           //「csv」から1行目（見出し行）以降をループで「csv2」へ新たに格納
           var csv2 = []
-          for (var i = 1; i<csv.length; i++){
-            csv2.push(csv[i]);
-          }
+          for (var i in csv){
 
+            if (i != 0){
+              csv[i].splice(18, 0, ' ', ' ');
+              
+              var csvkari = [];
+              for (var item = 2; item<csv[i].length; item++){  
+                if(item==5){
+                  csv[i][item]="可"
+                }
+                if(item==8){
+                  continue
+                }
+                csvkari.push(csv[i][item]); 
+              }
+              csv2.push(csvkari);   
+            }
+          }
           //空白行を探す
           var ro = sh.getLastRow()+1;
           
