@@ -7,10 +7,10 @@ function import() {
   // 対象のCSVファイルが置かれているフォルダ名、ファイル名を定義
   var folderName = "エナビジョン出荷依頼";
   var fileName = "enavision" + today;
-  //var fileName = "エナビジョン出荷依頼表20190925.csv";
+  //var fileName = "enavision20190913";
   var folders = DriveApp.getFoldersByName(folderName);
-  var sh2 = ss.getSheetByName('エナビジョン出荷依頼');
-
+  var sh = ss.getSheetByName('エナビジョン出荷依頼');
+  var sh2 = ss.getSheetByName('エナビジョン出荷管理');
   
   //フォルダとファイルの検索
   while (folders.hasNext()) {
@@ -29,14 +29,15 @@ function import() {
           
           //「csv」から1行目（見出し行）以降をループで「csv2」へ新たに格納
           var csv2 = []
+          //空白行を探す
+          var ro = sh.getLastRow();
+          var ro2 = sh2.getLastRow();
           for (var i in csv){
 
-            //空白行を探す
-            var ro = sh2.getLastRow();
-            
             //見出しcsv[0]をスキップ
             if (i != 0){
               var ronum = ro+Number(i)
+              
               csv[i].splice(18, 0, ' ', ' ');
               csv[i][5]="可"
               var aisen = csv[i][11]
@@ -46,24 +47,25 @@ function import() {
               csv[i][19]="=IF(COUNTIF('WML管理表'!C:C,Y"+ronum+"),INDEX('WML管理表'!B:B,MATCH(Y"+ronum+",'WML管理表'!C:C,0)))";
               csv[i][20]="=IF(COUNTIF('SIM管理表'!J:J,Y"+ronum+"),INDEX('SIM管理表'!H:H,MATCH(Y"+ronum+",'SIM管理表'!J:J,0)))";
               csv[i][34]="=IF(COUNTIF('SIM管理表'!J:J,Y"+ronum+"),INDEX('SIM管理表'!G:G,MATCH(Y"+ronum+",'SIM管理表'!J:J,0)))";
+              csv[i][40]=today;
+              csv[i][42]= csv[i][9];
               
+              var kaisenNum = "=IF(COUNTIF('SIM管理表'!J:J,$Y"+ronum+"),INDEX('SIM管理表'!E:E,MATCH($Y"+ronum+",'SIM管理表'!J:J,0)))"
+              var simNum = "=IF(COUNTIF('SIM管理表'!J:J,Y"+ronum+"),INDEX('SIM管理表'!F:F,MATCH(Y"+ronum+",'SIM管理表'!J:J,0)))"
+              csv[i].push("","","","","","","",kaisenNum,simNum);
+
               var csvkari = [];
+              
               for (var item = 2; item<csv[i].length; item++){ 
                 if(item==8){continue}
-                
-                Logger.log("---------------------------"+item)
-                Logger.log(csv[i][item])
-                Logger.log("---------------------------"+item)
-                
                 csvkari.push(csv[i][item]); 
               }
-              csv2.push(csvkari);   
+              csv2.push(csvkari);
             }
           }
-          
-          
           //空白行セルからCSVの内容を書き込んでいく
-          sh2.getRange(ro+1,1,csv2.length,csv2[0].length).setValues(csv2);
+          sh.getRange(ro+1,1,csv2.length,csv2[0].length).setValues(csv2);
+          sh2.getRange(ro2+1,7,csv2.length,csv2[0].length).setValues(csv2);
           
           return;
         }
