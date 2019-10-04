@@ -7,8 +7,11 @@ function import() {
   // 対象のCSVファイルが置かれているフォルダ名、ファイル名を定義
   var folderName = "エナビジョン出荷依頼";
   var fileName = "enavision" + today;
+  //var fileName = "エナビジョン出荷依頼表20190925.csv";
   var folders = DriveApp.getFoldersByName(folderName);
+  var sh2 = ss.getSheetByName('エナビジョン出荷依頼');
 
+  
   //フォルダとファイルの検索
   while (folders.hasNext()) {
     var folder = folders.next();
@@ -28,27 +31,39 @@ function import() {
           var csv2 = []
           for (var i in csv){
 
+            //空白行を探す
+            var ro = sh2.getLastRow();
+            
+            //見出しcsv[0]をスキップ
             if (i != 0){
+              var ronum = ro+Number(i)
               csv[i].splice(18, 0, ' ', ' ');
+              csv[i][5]="可"
+              var aisen = csv[i][11]
+              var teikaku = csv[i][10]
+              csv[i][10]=aisen
+              csv[i][11]=teikaku
+              csv[i][19]="=IF(COUNTIF('WML管理表'!C:C,Y"+ronum+"),INDEX('WML管理表'!B:B,MATCH(Y"+ronum+",'WML管理表'!C:C,0)))";
+              csv[i][20]="=IF(COUNTIF('SIM管理表'!J:J,Y"+ronum+"),INDEX('SIM管理表'!H:H,MATCH(Y"+ronum+",'SIM管理表'!J:J,0)))";
+              csv[i][34]="=IF(COUNTIF('SIM管理表'!J:J,Y"+ronum+"),INDEX('SIM管理表'!G:G,MATCH(Y"+ronum+",'SIM管理表'!J:J,0)))";
               
               var csvkari = [];
-              for (var item = 2; item<csv[i].length; item++){  
-                if(item==5){
-                  csv[i][item]="可"
-                }
-                if(item==8){
-                  continue
-                }
+              for (var item = 2; item<csv[i].length; item++){ 
+                if(item==8){continue}
+                
+                Logger.log("---------------------------"+item)
+                Logger.log(csv[i][item])
+                Logger.log("---------------------------"+item)
+                
                 csvkari.push(csv[i][item]); 
               }
               csv2.push(csvkari);   
             }
           }
-          //空白行を探す
-          var ro = sh.getLastRow()+1;
+          
           
           //空白行セルからCSVの内容を書き込んでいく
-          sh.getRange(ro,1,csv2.length,csv2[0].length).setValues(csv2);
+          sh2.getRange(ro+1,1,csv2.length,csv2[0].length).setValues(csv2);
           
           return;
         }
