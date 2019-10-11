@@ -5,7 +5,7 @@
 
 //書き込む対象のSpread Sheetを定義
 var ss = SpreadsheetApp.getActiveSpreadsheet();
-var sh = ss.getSheetByName('ena1');
+//var sh = ss.getSheetByName('ena1');
 
 var SEARCH_TERM = 'label:エナビ確認済-出荷依頼 csv is:unread';
 var myFolder = DriveApp.getFolderById("1lcHVxYbjsIDQZRSLpoUH7xUWSCtMcUWU");
@@ -21,7 +21,7 @@ function kensaku(){
   if (myThreads != false){
     Logger.log("OK")
     csv_down();
-    LINE();
+    //LINE();
   }else{
     Logger.log("データ無し")
   }
