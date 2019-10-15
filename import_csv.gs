@@ -52,7 +52,7 @@ function import() {
               
               var kaisenNum = "=IF(COUNTIF('SIM管理表'!J:J,$Y"+ronum+"),INDEX('SIM管理表'!E:E,MATCH($Y"+ronum+",'SIM管理表'!J:J,0)))"
               var simNum = "=IF(COUNTIF('SIM管理表'!J:J,Y"+ronum+"),INDEX('SIM管理表'!F:F,MATCH(Y"+ronum+",'SIM管理表'!J:J,0)))"
-              csv[i].push("","","","","","","",kaisenNum,simNum);
+              csv[i].push("","","","","","","",kaisenNum,simNum,"","佐川","","佐川");
 
               var csvkari = [];
               
